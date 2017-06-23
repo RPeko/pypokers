@@ -28,10 +28,15 @@ page-training {
     border-radius: 0px;
     position: relative;
     text-align: center;
+    height: 30%;
 
-    .full-image {
-      height: 100%;
-    }
+    // .full-image {
+    //   height: 25%;
+    // }
+  }
+
+  .training-buttons{
+    width:45%;
   }
 
   .card-title {
@@ -117,11 +122,16 @@ page-training {
     border-radius: 0px;
     position: relative;
     text-align: center;
-    height:50%;
+    height:70%;
 
-    .full-image {
-      height: 100%;
-    }
+    // .full-image {
+    //   height: 100%;
+
+    // }
+  }
+
+  .training-buttons{
+    width:23%;
   }
 
   .card-title {
