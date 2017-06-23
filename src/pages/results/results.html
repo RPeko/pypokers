@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Results</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+<ion-item-group *ngFor="let play of plays">
+    <ion-item-divider ion-item (click)="toogle(play)"> 
+        {{play.play_ts | date:'dd/MM/yyyy H:mm'}}
+        <ion-icon item-right name="more"></ion-icon>
+    </ion-item-divider>
+    <div *ngIf="play.show">
+    <div class={{res.class}} *ngFor="let res of play.results">
+        <p>{{res.hand.rank1}}{{res.hand.suit1}}-{{res.hand.rank2}}{{res.hand.suit2}}; 
+          Answer: {{getFullAnswer(res.answer)}} ({{getFullAnswer(res.correct_answer)}});
+            Reaction time ms:{{res.pass_time}}</p>
+        <p>Action before you: {{getAby(res.aby)}};
+          Position:{{res.eml}}</p>
+        <br/>
+    </div>
+    </div>
+</ion-item-group>
+</ion-content>
+<ion-footer>
+<button ion-button col-6 icon-right  color="danger" [navPush]="trainingPage" (click)="clearAllResults()">Clear results<ion-icon name="trash"></ion-icon></button>
+</ion-footer> 

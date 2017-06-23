@@ -1,0 +1,201 @@
+.toast-correct{
+  .toast-container{
+    background-color: green;
+    }
+}
+
+.toast-not-correct{
+  .toast-container{
+    background-color: red;
+    }
+}
+
+page-training {
+.correct{
+    color: green;
+    text-align: center;
+}
+.not-correct{
+    background: red;
+}
+
+// portrait orientation
+@media all and (orientation: portrait){
+.card-background-page {
+
+  ion-card {
+    box-shadow: 0 0px 0px;
+    border-radius: 0px;
+    position: relative;
+    text-align: center;
+
+    .full-image {
+      height: 100%;
+    }
+  }
+
+  .card-title {
+    position: absolute;
+    top: 30%;
+    font-size: 0.8em;
+    width: 100%;
+    color: whitesmoke;
+  }
+
+  .card1 {
+    position: absolute;
+    bottom: 0%;
+    left: 38%;
+    height: 53px;
+    width: 39px;
+    align-items: center;
+  }
+
+  .card2 {
+    position: absolute;
+    bottom: 0%;
+    left: 50%;
+    height: 53px;
+    width: 39px;
+    align-items: center;
+  }
+
+  .deal{
+    position: relative;
+    height: 15px;
+    width: 15px;
+  }
+
+  .n1{
+    left: 64%;
+    bottom: 45px;
+  }
+  .n2{
+    left: 81%;
+    bottom: 53px;
+  }
+  .n3{
+    left: 83%;
+    bottom: 95px;
+  }
+  .n4{
+    left: 70%;
+    bottom: 112px;
+  }
+  .n5{
+    left: 31%;
+    bottom: 112px;
+  }
+  .n6{
+    left: 15%;
+    bottom: 104px;
+  }
+  .n7{
+    left: 11%;
+    bottom: 62px;
+    }
+  .n8{
+    left: 23%;
+    bottom: 45px;
+    }
+
+  .n9{
+    left: 33%;
+    bottom: 46px;
+    }
+  
+  } //card-background-page
+} //media all and (orientation: portrait)
+
+// landscape orientation
+@media all and (orientation: landscape){
+
+.card-background-page {
+
+  ion-card {
+    box-shadow: 0 0px 0px;
+    border-radius: 0px;
+    position: relative;
+    text-align: center;
+    height:50%;
+
+    .full-image {
+      height: 100%;
+    }
+  }
+
+  .card-title {
+    position: absolute;
+    top: 30%;
+    font-size: 0.8em;
+    width: 100%;
+    color: whitesmoke;
+  }
+
+  .card1 {
+    position: absolute;
+    bottom: 0%;
+    left: 38%;
+    height: 53px;
+    width: 39px;
+    align-items: center;
+  }
+
+  .card2 {
+    position: absolute;
+    bottom: 0%;
+    left: 50%;
+    height: 53px;
+    width: 39px;
+    align-items: center;
+  }
+
+  .deal{
+    position: relative;
+    height: 15px;
+    width: 15px;
+  }
+
+  .n1{
+    left: 64%;
+    bottom: 45px;
+  }
+  .n2{
+    left: 81%;
+    bottom: 53px;
+  }
+  .n3{
+    left: 83%;
+    bottom: 95px;
+  }
+  .n4{
+    left: 70%;
+    bottom: 112px;
+  }
+  .n5{
+    left: 31%;
+    bottom: 112px;
+  }
+  .n6{
+    left: 15%;
+    bottom: 104px;
+  }
+  .n7{
+    left: 11%;
+    bottom: 62px;
+    }
+  .n8{
+    left: 23%;
+    bottom: 45px;
+    }
+
+  .n9{
+    left: 33%;
+    bottom: 46px;
+    }
+  
+  } //card-background-page
+} //media all and (orientation: landscape)
+
+}
+
