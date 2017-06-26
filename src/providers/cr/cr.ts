@@ -11,16 +11,14 @@ export class CRProvider {
   remote: any;
 
   constructor(public cardProvider: CardProvider) {
-    this.db = new PouchDB('db_pypokers_cr');
+    this.db = new PouchDB('db_pp_cr');
     this.getAllCRs().then(allCRs => {
-      if (allCRs.length != 1326) {
-        console.log("allCRs.length != 1326");
+      if (allCRs.length !== 1326) {
         for (let i = 0; i < allCRs.length; i++) {
           this.deleteCR(allCRs[i]);
         }
         this.cardProvider.getAllHands().subscribe(
           allHands => {
-            console.log("allHands.length: " + allHands.length);
             for (let k = 0; k < allHands.length; k++) {
               let cr = new CR();
               cr.hand = allHands[k];

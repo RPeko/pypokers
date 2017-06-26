@@ -7,7 +7,7 @@ export class ResultProvider {
   db: any;
 
   constructor() {
-    this.db = new PouchDB('db_pypokers_res');
+    this.db = new PouchDB('db_pp_res');
   }
 
   getAllResults() {

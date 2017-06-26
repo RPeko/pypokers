@@ -14,7 +14,7 @@ import { CR } from "../../models/cr";
   templateUrl: 'campaign.html',
 })
 export class CampaignPage {
-campaign: boolean;
+campaign = false;
 results: Array<Result>=[];
 allCRs: Array<CR>=[];
 goalCR = 3;
@@ -32,17 +32,13 @@ goalCR = 3;
   }
 
   ionViewDidLoad() {
-    console.log((new Date()).toTimeString());
     this.CRProvider.getAllCRs()
-      .then(CRs => {this.allCRs = CRs,
-         console.log((new Date()).toTimeString());});
+      .then(CRs => this.allCRs = CRs );
   }
 
    saveToggleCampaign() {
     this.storage.set('toggleCampaign', this.campaign);
   }
-
-  
 
   sortCR(sort: string): void{
     let sorted = this.allCRs.sort((a,b) =>{

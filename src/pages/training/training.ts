@@ -34,7 +34,7 @@ export class TrainingPage {
   card2ImgSrc = "";
   dealPosition = "deal";
   campaign = false;
-  campaign_noc = 1; // number of correct answer for each hand 
+  campaign_noc = 3; // number of correct answer for each hand 
   igraUToku = false;
 
   constructor(public navCtrl: NavController,
@@ -49,9 +49,9 @@ export class TrainingPage {
       storage.get('toggleCampaign').then((val) => {
         if (val != null) { this.campaign = val; }
       });
-      storage.get('campaign_noc').then((val) => {
-        if (val != null) { this.campaign_noc = val; }
-      });
+      // storage.get('campaign_noc').then((val) => {
+      //   if (val != null) { this.campaign_noc = val; }
+      // });
     });
   }
 
