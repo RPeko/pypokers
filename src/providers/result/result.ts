@@ -2,16 +2,15 @@ import { Injectable } from '@angular/core';
 import PouchDB from 'pouchdb';
 
 @Injectable()
-export class DbProvider {
+export class ResultProvider {
   data: any;
   db: any;
-  // remote: any;
 
   constructor() {
-    this.db = new PouchDB('db_pypokers');
+    this.db = new PouchDB('db_pypokers_res');
   }
 
-  getResults() {
+  getAllResults() {
     if (this.data) {
       return Promise.resolve(this.data);
     }

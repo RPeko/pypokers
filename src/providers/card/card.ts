@@ -57,4 +57,11 @@ error:string;
     }
   }
 
+equalHands(h1: Hand, h2: Hand) {
+    if (h1.rank1 === h2.rank1 && h1.suit1 === h2.suit1 && h1.rank2 === h2.rank2 && h1.suit2 === h2.suit2) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

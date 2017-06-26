@@ -6,6 +6,7 @@ import { HomePage } from "../pages/home/home";
 import { ResultsPage } from "../pages/results/results";
 import { AboutPage } from "../pages/about/about";
 import { TrainingPage } from "../pages/training/training";
+import { CampaignPage } from "../pages/campaign/campaign";
 
 
 @Component({
@@ -25,6 +26,7 @@ export class MyApp {
       { title: 'Home', component: HomePage },
       { title: 'Training room', component: TrainingPage},
       { title: 'Results', component: ResultsPage },
+      { title: 'Campaign', component: CampaignPage },
       { title: 'About', component: AboutPage }
     ];
 

@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Campaign</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+<ion-item>
+    <ion-label>Campaign turn on/off</ion-label>
+    <ion-toggle [(ngModel)]="campaign" (ionChange)="saveToggleCampaign()"></ion-toggle>
+  </ion-item>
+
+<ion-list>
+  <ion-row class="campaign-row" *ngFor="let cr of allCRs">
+    <img col-2 class="campaign-card" src= '{{ "assets/img/cards/" + cr.hand.rank1 + cr.hand.suit1 + ".svg"}}'>
+    <img col-2 class="campaign-card" src= '{{ "assets/img/cards/" + cr.hand.rank2 + cr.hand.suit2 + ".svg"}}'>
+    <ion-icon col-2 class="check-icon" *ngIf="cr.noc>0 && cr.noc < goalCR +1" name="checkmark-circle"></ion-icon>
+    <ion-icon col-2 class="check-icon" *ngIf="cr.noc>1 && cr.noc < goalCR +1" name="checkmark-circle"></ion-icon>
+    <ion-icon col-2 class="check-icon" *ngIf="cr.noc == goalCR" name="checkmark-circle"></ion-icon>
+  </ion-row>
+</ion-list>
+</ion-content>

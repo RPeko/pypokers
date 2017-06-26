@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { DbProvider } from "../../providers/db/db";
 import { Result } from "../../models/result";
 import { CardProvider } from "../../providers/card/card";
 import { Play } from "../../models/play";
 import { TrainingPage } from "../training/training";
+import { ResultProvider } from "../../providers/result/result";
 
 @IonicPage()
 @Component({
@@ -18,7 +18,7 @@ export class ResultsPage {
 
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
-              public dbProvider: DbProvider,
+              public resultProvider: ResultProvider,
               public cardProvider: CardProvider) {
         this.trainingPage = TrainingPage;
   }
@@ -28,7 +28,7 @@ export class ResultsPage {
   }
 
   getResults(){
-  this.dbProvider.getResults().then((data) => {
+  this.resultProvider.getAllResults().then((data) => {
         data.sort((a,b) =>{
           if (a.time_stamp == null || b.time_stamp == null){ return 0;}
           return  +b.time_stamp - +a.time_stamp;
@@ -56,7 +56,7 @@ export class ResultsPage {
 
 
   clearAllResults(){
-    this.results.forEach(res => this.dbProvider.deleteResult(res));
+    this.results.forEach(res => this.resultProvider.deleteResult(res));
  }
 
  getAby(aby:number){

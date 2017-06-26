@@ -1,18 +1,17 @@
 <ion-header>
-   <!--<ion-navbar>
+  <ion-navbar>
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Training</ion-title>
-  </ion-navbar>-->
+  </ion-navbar>
 </ion-header>
 
 <ion-content class="card-background-page">
   <ion-card>
     <img src="assets/img/table.png" />
     <div class="card-title" align="center" *ngIf="(hmh+1)>currentPlay && currentPlay>0">
-        Current play: {{currentPlay}} / {{hmh}}<br/>
-        Action before you: {{getAby(aby)}}
+      Current play: {{currentPlay}} / {{hmh}}<br/> Action before you: {{getAby(aby)}}
     </div>
     <div class={{dealPosition}} *ngIf="currentPlay>0">
       <img src="assets/img/deal.png" />
@@ -24,20 +23,25 @@
       <img align="center" width="35" height="48" src={{card2ImgSrc}}>
     </div>
   </ion-card>
-  <ion-item *ngIf="0==currentPlay ||  currentPlay>hmh">
-    <ion-label text-left>How many hands?</ion-label>
-    <ion-input text-center type="number" [(ngModel)]="hmh"></ion-input>
+  <ion-item *ngIf="!igraUToku">
+    <ion-label text-left>Number of deals?</ion-label>
+    <ion-select [(ngModel)]="hmh">
+      <ion-option>10</ion-option>
+      <ion-option>25</ion-option>
+      <ion-option>50</ion-option>
+      <ion-option>100</ion-option>
+    </ion-select>
   </ion-item>
-  <ion-item *ngIf="0==currentPlay || currentPlay>hmh">
+  <ion-item *ngIf="!igraUToku">
     <button ion-button col-6 icon-right (click)="begin()">Play cards<ion-icon name="arrow-dropright-circle"></ion-icon></button>
-    <button ion-button col-6 icon-right [navPush]="resultsPage" >Results<ion-icon name="stats"></ion-icon></button>
+    <button ion-button col-6 icon-right [navPush]="resultsPage">Results<ion-icon name="stats"></ion-icon></button>
   </ion-item>
-  <ion-grid  *ngIf="(hmh+1)>currentPlay && currentPlay>0">
+  <ion-grid *ngIf="igraUToku">
     <ion-row wrap align="center">
       <button ion-button class="training-buttons" color="danger" icon-right (click)="answered('f')">Fold<ion-icon name="close-circle"></ion-icon></button>
       <button ion-button class="training-buttons" color="secondary" icon-right (click)="answered('h')">Check<ion-icon name="checkmark"></ion-icon></button>
       <button ion-button class="training-buttons" icon-right (click)="answered('r')">Rise<ion-icon name="arrow-round-up"></ion-icon></button>
       <button ion-button class="training-buttons" color="light" icon-right (click)="answered('c')">Call<ion-icon name="hand"></ion-icon></button>
     </ion-row>
-</ion-grid>
+  </ion-grid>
 </ion-content>
