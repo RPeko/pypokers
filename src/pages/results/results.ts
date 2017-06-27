@@ -5,6 +5,7 @@ import { CardProvider } from "../../providers/card/card";
 import { Play } from "../../models/play";
 import { TrainingPage } from "../training/training";
 import { ResultProvider } from "../../providers/result/result";
+import { GraphsPage } from "../graphs/graphs";
 
 @IonicPage()
 @Component({
@@ -15,12 +16,14 @@ export class ResultsPage {
   results:Result[];
   plays:Play[] = [];
   trainingPage:any;
+  graphsPage:any;
 
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
               public resultProvider: ResultProvider,
               public cardProvider: CardProvider) {
         this.trainingPage = TrainingPage;
+        this.graphsPage = GraphsPage;
   }
 
   ionViewDidLoad() {

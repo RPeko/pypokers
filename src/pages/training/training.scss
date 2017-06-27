@@ -207,5 +207,29 @@ page-training {
   } //card-background-page
 } //media all and (orientation: landscape)
 
-}
+// .spinner{
+//   width:50%;
+//   height:50%;
+//   opacity: 0;
+//   transform: rotate3d(1, 1, 0, 50deg);
+//   animation: 1s 0.2s ease fadeInAndSpin;
+//   animation-fill-mode: forwards;
+// }
 
+// @keyframes fadeInAndSpin {
+ 
+//     100% {
+//         opacity: 1;
+//         transform: rotate3d(1, 1, 0, 0deg);
+//     }
+ 
+// }
+ 
+// @keyframes fadeIn {
+ 
+//     100% {
+//         opacity: 1;
+//     }
+// }
+
+}

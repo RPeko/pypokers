@@ -12,7 +12,7 @@ export class CRProvider {
 
   constructor(public cardProvider: CardProvider) {
     this.db = new PouchDB('db_pp_cr');
-    this.getAllCRs().then(allCRs => {
+    this.getCRs().then(allCRs => {
       if (allCRs.length !== 1326) {
         for (let i = 0; i < allCRs.length; i++) {
           this.deleteCR(allCRs[i]);
@@ -23,6 +23,7 @@ export class CRProvider {
               let cr = new CR();
               cr.hand = allHands[k];
               cr.noc = 0;
+              cr._id = "" + (100000 + cr.hand.hand_id);
               this.db.post(cr);
             }
           }
@@ -42,17 +43,15 @@ export class CRProvider {
         });
   }
 
-  getAllCRs() {
+  getCRs() {
     if (this.data) {
       return Promise.resolve(this.data);
     }
 
     return new Promise(resolve => {
-      this.db.allDocs({
-        include_docs: true
-      }).then((cr) => {
+      this.db.allDocs({include_docs: true}).then((CRs) => {
         this.data = [];
-        cr.rows.map((row) => {
+        CRs.rows.map((row) => {
           this.data.push(row.doc);
         });
         resolve(this.data);
@@ -64,6 +63,10 @@ export class CRProvider {
       });
     });
   }
+
+  createCR(cr) {
+      this.db.post(cr);
+    }
 
   updateCR(cr) {
     this.db.put(cr).catch((err) => {

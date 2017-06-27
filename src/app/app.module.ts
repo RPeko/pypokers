@@ -18,6 +18,7 @@ import { CardProvider } from '../providers/card/card';
 import { ResultsPage } from "../pages/results/results";
 import { CampaignPage } from "../pages/campaign/campaign";
 import { CRProvider } from "../providers/cr/cr";
+import { GraphsPage } from "../pages/graphs/graphs";
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { CRProvider } from "../providers/cr/cr";
     TabsPage,
     TrainingPage,
     CampaignPage,
-    ResultsPage
+    ResultsPage,
+    GraphsPage
   ],
   imports: [
     BrowserModule,
@@ -45,7 +47,8 @@ import { CRProvider } from "../providers/cr/cr";
     TabsPage,
     TrainingPage,
     CampaignPage,
-    ResultsPage
+    ResultsPage,
+    GraphsPage
   ],
   providers: [
     StatusBar,

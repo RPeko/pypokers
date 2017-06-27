@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, LoadingController } from 'ionic-angular';
 import { CardProvider } from "../../providers/card/card";
 import { Hand } from "../../models/hand";
 import { Answer } from "../../models/answer";
@@ -39,6 +39,7 @@ export class TrainingPage {
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
+    public loadingCtrl: LoadingController,
     public cardProvider: CardProvider,
     public resultProvider: ResultProvider,
     public CRProvider: CRProvider,
@@ -56,6 +57,11 @@ export class TrainingPage {
   }
 
   ionViewDidLoad() {
+     let loading = this.loadingCtrl.create({
+      content:"Please wait...",
+      duration: 3000
+    });
+    loading.present();
     this.cardProvider.getAllHands()
       .subscribe(hands => {
         this.allHands = hands;
@@ -64,8 +70,11 @@ export class TrainingPage {
       .subscribe(answers => {
         this.allAnswers = answers;
       });
-    this.CRProvider.getAllCRs().then(crs =>
-      this.allCRs = crs);
+    this.CRProvider.getCRs().then(crs =>
+      {
+       this.allCRs = crs;
+       loading.dismiss();}
+       );
   }
 
   begin() {
@@ -160,10 +169,10 @@ export class TrainingPage {
     }
     this.resultProvider.createResult(res);
     if (a === correctAnswer) {
-      this.answerInfo = "Hand " + this.currentPlay + "/" + this.hmh + ": Correct!";
+      this.answerInfo = "Hand " + this.currentPlay + "/" + this.hmh + ": Correct! Time: " + Math.floor(res.pass_time/100)/10 + "s";
       this.answerInfoClass = "correct";
     } else {
-      this.answerInfo = "Hand " + this.currentPlay + "/" + this.hmh + ": Not correct! (" + this.cardProvider.getFullAnswer(correctAnswer) + ")";
+      this.answerInfo = "Hand " + this.currentPlay + "/" + this.hmh + ": Not correct! (" + this.cardProvider.getFullAnswer(correctAnswer) + ") Time: " + Math.floor(res.pass_time/100)/10 + "s";
       this.answerInfoClass = "not-correct";
 
     }
@@ -183,7 +192,7 @@ export class TrainingPage {
   presentToast() {
     let toast = this.toastCtrl.create({
       message: this.answerInfo,
-      duration: 1000,
+      duration: 2000,
       position: 'top',
       cssClass: 'toast-' + this.answerInfoClass
     });
