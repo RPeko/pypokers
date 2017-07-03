@@ -1,3 +1,4 @@
+<div hideWhen="landscape">
 <ion-header>
   <ion-navbar>
     <button ion-button menuToggle>
@@ -6,8 +7,11 @@
     <ion-title>Training</ion-title>
   </ion-navbar>
 </ion-header>
-
+</div>
 <ion-content class="card-background-page">
+  <div hideWhen="landscape">
+    <br><br><br>
+  </div>
   <ion-card>
     <img src="assets/img/table.png" />
     <div class="card-title" align="center" *ngIf="(hmh+1)>currentPlay && currentPlay>0">

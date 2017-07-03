@@ -1,9 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Chart } from 'chart.js';
-import { ResultProvider } from "../../providers/result/result";
-import { Result } from "../../models/result";
-
 
 @IonicPage()
 @Component({
@@ -12,32 +9,41 @@ import { Result } from "../../models/result";
 })
 export class GraphsPage {
    @ViewChild('barCanvas') barCanvas;
-    proba: Result[] = [];
-    mpgChart: any; // mistakes per group
-    mpgData=[1,2,3,4,5,6,7,8,9];
-    mpgBackgroundColor = ["blue","blue","blue","blue","blue","blue","blue","blue","blue"];
-    mpgborderColor = ["blue","blue","blue","blue","blue","blue","blue","blue","blue"];
+    chart: any;
+    graphMainLabel:any;
+    graphLabels: any;
+    graphData: any;
+    graphBackgroundColor: any;
+    graphBorderColor: any;
 
   constructor(public navCtrl: NavController, 
-              public navParams: NavParams,
-              public resultProvider: ResultProvider) {
+              public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
-   
-     this.mpgChart = new Chart(this.barCanvas.nativeElement, {
+     this.graphLabels = this.navParams.get('graphLabels');
+     this.graphData  = this.navParams.get('graphData');
+     this.graphBackgroundColor  = this.getColors(this.graphData);
+     this.graphBorderColor  = this.graphBackgroundColor;
+     this.graphMainLabel  = this.navParams.get('graphMainLabel');
+     
+     this.chart = new Chart(this.barCanvas.nativeElement, {
             type: 'bar',
             data: {
-                labels: ["AA,KK,QQ,AK", "JJ,TT", "99-22", "AQJs", "ATJ0", "A-2s", "KQJ", "KT-54s", "other"],
+                labels: this.graphLabels,
                 datasets: [{
-                    label: '# of Votes',
-                    data: this.mpgData,
-                    backgroundColor: this.mpgBackgroundColor,
-                    borderColor: this.mpgborderColor,
+                    label: this.graphMainLabel,
+                    data: this.graphData,
+                    backgroundColor: this.graphBackgroundColor,
+                    borderColor: this.graphBorderColor,
                     borderWidth: 1
                 }]
             },
             options: {
+                responsive: true,
+                legend: {
+                    display: false
+                },
                 scales: {
                     yAxes: [{
                         ticks: {
@@ -49,5 +55,21 @@ export class GraphsPage {
  
         });
   }
+
+  getColors(data:any[]){
+  let colors=[];
+  let min = Math.min.apply(Math, data);
+  let max = Math.max.apply(Math, data);
+  for (let i=0; i < data.length; i++){
+    if (data[i] > 8/10*max){
+      colors.push("red");
+    } else if (data[i]<11/10*min) {
+      colors.push("darkgreen");
+    } else {
+      colors.push("green");
+    }
+  }
+  return colors;
+ }      
 
 }

@@ -1,3 +1,4 @@
+<div  hideWhen="landscape">
 <ion-header>
   <ion-navbar>
     <button ion-button menuToggle>
@@ -6,13 +7,17 @@
     <ion-title>Analysis</ion-title>
   </ion-navbar>
 </ion-header>
+</div>
 
 <ion-content>
+ <div hideWhen="landscape">
+    <br><br><br>
+  </div>
    <ion-card>
       <ion-card-header>
-        Mistakes % per group
+        {{graphMainLabel}}
       </ion-card-header>
-      <ion-card-content>
+      <ion-card-content class="canvas-container">
         <canvas #barCanvas></canvas>
       </ion-card-content>
     </ion-card>

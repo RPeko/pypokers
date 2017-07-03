@@ -56,7 +56,7 @@ export class CampaignPage {
 
   doInfinite(infiniteScroll) {
     setTimeout(() => {
-      this.limit = this.limit + 300;
+      this.limit = this.limit + 200;
       this.CRProvider.getCRs()
         .then(CRs => {
           console.log("Crs length: " + CRs.length);

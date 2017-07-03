@@ -36,6 +36,7 @@ export class TrainingPage {
   campaign = false;
   campaign_noc = 3; // number of correct answer for each hand 
   igraUToku = false;
+  log = "";
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -58,11 +59,10 @@ export class TrainingPage {
 
   ionViewDidLoad() {
      let loading = this.loadingCtrl.create({
-      content:"Please wait...",
-      duration: 3000
+      content:"Please wait..."
     });
-    loading.present();
-    this.cardProvider.getAllHands()
+    loading.present().then(() => {
+      this.cardProvider.getAllHands()
       .subscribe(hands => {
         this.allHands = hands;
       });
@@ -70,14 +70,17 @@ export class TrainingPage {
       .subscribe(answers => {
         this.allAnswers = answers;
       });
-    this.CRProvider.getCRs().then(crs =>
-      {
-       this.allCRs = crs;
-       loading.dismiss();}
-       );
+    this.CRProvider.getCRs()
+      .then(crs => {
+        this.allCRs = crs;
+        loading.dismiss();
+        });
+    });
+    
   }
 
   begin() {
+    // this.proba();
     this.igraUToku = true;
     this.currentPlay = 0;
     this.play_start = new Date();
@@ -86,33 +89,10 @@ export class TrainingPage {
   }
 
   newHand(): void {
-    let hand_i: Hand;
-    let correctAnswer_i;
-    // let previousCards: Array<String>=[];
-    // let hasFirst = -1;
-    // let hasSecond = -1;
     this.currentPlay = this.currentPlay + 1;
     this.hand_start = new Date();
     this.position = Math.floor(Math.random() * 9) + 1;
-    this.aby = 1;
-    for (let i = 1; i < this.position - 1; i++) {
-      //   do {
-      hand_i = this.allHands[this.getRandomHandIndex()];
-      //   hasFirst = previousCards.findIndex(c => (c === (hand_i.rank1 + hand_i.suit1)));
-      //   hasSecond= previousCards.findIndex(c => (c === (hand_i.rank2 + hand_i.suit2)));
-      //   } while (hasFirst>-1 || hasSecond>-1)
-      //   previousCards.push(hand_i.rank1 + hand_i.suit1);
-      //   previousCards.push(hand_i.rank2 + hand_i.suit2);
-      correctAnswer_i = this.getCorrectAnswer(hand_i);
-      if (this.aby < 2) {
-        if (correctAnswer_i === 'h' || correctAnswer_i === 'c') {
-          this.aby = 2;
-        }
-      }
-      if (correctAnswer_i === 'r' && this.aby < 3) {
-        this.aby = 3;
-      }
-    }
+    this.aby = this.calculateAby(this.position);
     let index = this.getRandomHandIndex();
     let step = 0;
     this.currentHand = this.allHands[index];
@@ -123,16 +103,14 @@ export class TrainingPage {
           index++;
         } else {
           index = 0;
-          // console.log("Index = 0!");
         }
-        if (step == 1326) {
+        if (step == 2) {
           this.campaign = false;
           this.answerInfo = "Campaign finished!";
           this.presentToast();
           break;
         }
         this.currentHand = this.allHands[index];
-        // console.log("step:" + step + ", index:" + index);
       }
       while (this.getNOC(this.currentHand) >= this.campaign_noc || (step > 1325));
 
@@ -147,7 +125,7 @@ export class TrainingPage {
     let res = new Result();
     let currentTime = new Date();
 
-    correctAnswer = this.getCorrectAnswer(this.currentHand);
+    correctAnswer = this.getCorrectAnswer(this.currentHand, this.position, this.aby);
     res.hand = this.currentHand;
     res.aby = this.aby;
     res.position = this.position;
@@ -199,14 +177,51 @@ export class TrainingPage {
     toast.present();
   }
 
-  getCorrectAnswer(hand: Hand): string {
+  getCorrectAnswer(hand: Hand, pos:number, aby:number): string {
     for (let i = 0; i < this.allAnswers.length; i++) {
       let a = this.allAnswers[i];
-      if (a.group === hand.group && a.aby == this.aby && a.position == this.position) {
+      if (a.group === hand.group && a.aby == aby && a.position == pos) {
+        // console.log("Nadjen odg: " + a.answer);
         return a.answer;
       }
     }
     return 'f';
+  }
+
+  calculateAby(pos: number){
+    let hand_i: Hand;
+    let correctAnswer_i;
+    // let previousCards: Array<String>=[];
+    // let hasFirst = -1;
+    // let hasSecond = -1;
+    let aby = 1;
+    for (let i = 1; i < pos; i++) {
+      //   do {
+      hand_i = this.allHands[this.getRandomHandIndex()];
+      // console.log(hand_i.rank1 + hand_i.suit1 + hand_i.rank2 + hand_i.suit2);
+      //   next code eliminate previously used cards, but it is not necessary and slowing performance
+      //   hasFirst = previousCards.findIndex(c => (c === (hand_i.rank1 + hand_i.suit1)));
+      //   hasSecond= previousCards.findIndex(c => (c === (hand_i.rank2 + hand_i.suit2)));
+      //   } while (hasFirst>-1 || hasSecond>-1)
+      //   previousCards.push(hand_i.rank1 + hand_i.suit1);
+      //   previousCards.push(hand_i.rank2 + hand_i.suit2);
+      if (Math.random()*10<2 && aby == 1){
+        // add 20% posibility of reaching aby == 2 for previous players of player_i
+        // that's not mean that aby will be =>2
+        correctAnswer_i = this.getCorrectAnswer(hand_i, i, 2);  
+      }else{
+        correctAnswer_i = this.getCorrectAnswer(hand_i, i, aby);
+      }
+      if (aby < 2) {
+        if (correctAnswer_i === 'h' || correctAnswer_i === 'c') {
+          aby = 2;
+        }
+      }
+      if (correctAnswer_i === 'r' && aby < 3) {
+        aby = 3;
+      }
+    }
+    return aby;
   }
 
   getRandomHandIndex() {
@@ -241,6 +256,21 @@ export class TrainingPage {
     }
   }
 
+//  proba(){
+//    let brojC=0;
+//    for (let i = 0; i<this.allHands.length; i++){
+//       for (let p =1; p<10; p++){
+//           for (let a=1;a<4;a++){
+//             if (this.getCorrectAnswer(this.allHands[i],p,a) === 'c' || this.getCorrectAnswer(this.allHands[i],p,a) === 'h'){
+//                   brojC++;
+//               }
+//           }
+         
+//       }
+      
+//    }
+//    console.log("Broj c ili h: " + brojC);
+//  }
 
 
 }
